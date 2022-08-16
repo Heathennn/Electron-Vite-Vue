@@ -12,9 +12,9 @@ import HelloWorld from './components/HelloWorld.vue'
     <span/>
     <img style="height:140px;" src="./assets/vue.png" >
   </div>
-  <HelloWorld msg="Hello Vue 3 + TypeScript + Vite" />
+  <HelloWorld msg="开始搞起来!!" />
   <div class="static-public">
-    Place static files into the <code>/public</code> folder
+    Place static files into the <code>/public</code> folder11111
     <img style="width:77px;" :src="'./node.png'" >
   </div>
 </template>
