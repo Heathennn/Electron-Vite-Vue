@@ -1,7 +1,10 @@
 import { app, BrowserWindow, shell, ipcMain } from 'electron'
 import { release } from 'os'
 import { join } from 'path'
-
+import { cwd } from 'process'
+// ipcMain 用于接收 渲染进程的事件 调用node
+import './ipcMainGetter'
+// import { ProcessMessage } from './processMessage'
 // Disable GPU Acceleration for Windows 7
 if (release().startsWith('6.1')) app.disableHardwareAcceleration()
 
@@ -35,6 +38,8 @@ const indexHtml = join(ROOT_PATH.dist, 'index.html')
 async function createWindow() {
   win = new BrowserWindow({
     title: 'Main window',
+    width: 1200,
+    height: 800,
     icon: join(ROOT_PATH.public, 'favicon.ico'),
     webPreferences: {
       preload,
@@ -55,8 +60,9 @@ async function createWindow() {
   }
 
   // Test actively push message to the Electron-Renderer
+  // 主进程发给渲染进程
   win.webContents.on('did-finish-load', () => {
-    win?.webContents.send('main-process-message', new Date().toLocaleString())
+    win?.webContents.send('main-process-message', `页面加载完成于:${new Date().toLocaleString()}`)
   })
 
   // Make all links open with the browser, not with the application
@@ -89,7 +95,6 @@ app.on('activate', () => {
     createWindow()
   }
 })
-
 // new window example arg: new windows url
 ipcMain.handle('open-win', (event, arg) => {
   const childWindow = new BrowserWindow({
@@ -105,3 +110,4 @@ ipcMain.handle('open-win', (event, arg) => {
     // childWindow.webContents.openDevTools({ mode: "undocked", activate: true })
   }
 })
+

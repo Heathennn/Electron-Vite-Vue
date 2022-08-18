@@ -1,52 +1,95 @@
 <script setup lang="ts">
 // This starter template is using Vue 3 <script setup> SFCs
 // Check out https://vuejs.org/api/sfc-script-setup.html#script-setup
-import HelloWorld from './components/HelloWorld.vue'
+import { useMainStore } from './store/main.js';
+import { storeToRefs } from 'pinia';
+import { ref } from 'vue'
+import HeadIcon from './assets/images/pet_dog.gif';
+import { menuList, MenuItem } from './config/menu'
+import { useRouter, useRoute } from 'vue-router'
+
+const activeMenu = ref<MenuItem>({
+    name: '首页',
+    path: '/'
+})
+const nickName = ref<string>('Gnak\'s Gear')
+const mainStore = useMainStore()
+const router = useRouter();
+// 结构state上的变量  storeToRefs 
+const { name, age } = storeToRefs(mainStore)
+const { updateName, nameLength } = mainStore
+
+const changeMenuItem = (item:MenuItem) => {
+    activeMenu.value = item;
+    router.push({ name: item.routeName })
+}
+
 </script>
 
 <template>
-  <div class="logo-box">
-    <img style="height:140px;" src="./assets/electron.png" >
-    <span/>
-    <img style="height:140px;" src="./assets/vite.svg" >
-    <span/>
-    <img style="height:140px;" src="./assets/vue.png" >
-  </div>
-  <HelloWorld msg="开始搞起来!!" />
-  <div class="static-public">
-    Place static files into the <code>/public</code> folder11111
-    <img style="width:77px;" :src="'./node.png'" >
+  <div class="main-container">
+    <div class="menu-side-bar">
+            <img class="head-icon" :src="HeadIcon"/>
+            <div class="nick-name animate__animated animate__flipInX">{{ nickName }}</div>
+
+            <div class="menu-box">
+                <div :class="['menu-item', item.name === activeMenu.name && item.path === activeMenu.path && 'active']" v-for="item in menuList" @click="changeMenuItem(item)">
+                    {{ item.name }}
+                </div>
+            </div>
+        </div>
+        <div class="content">
+            <router-view></router-view>
+        </div>
   </div>
 </template>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-
-.logo-box {
-  display: flex;
+<style lang="less" scoped>
+.main-container {
   width: 100%;
-  justify-content: center;
-}
-.logo-box span {
-  width: 74px;
-}
-.static-public {
+  height: 100%;
+  overflow: hidden;
   display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.static-public code {
-  background-color: #eee;
-  padding: 2px 4px;
-  margin: 0 4px;
-  border-radius: 4px;
-  color: #304455;
+  .menu-side-bar {
+        width: 200px;
+        height: 100%;
+        border-right: 1px solid #000000;
+        display: flex;
+        flex-direction: column;
+        padding-top: 50px;
+        align-items: center;
+        .head-icon {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            // border: 1px dashed #912828;
+        }
+        .nick-name {
+            font-size: 18px;
+            padding-top: 10px;
+            font-weight: bold;
+        }
+
+        .menu-box {
+            width: 100%;
+            padding: 20px 20px;
+            .menu-item {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                padding: 10px 0;
+                cursor: pointer;
+                &.active {
+                    color: #ffffff;
+                    background-color: #c47d21;
+                    border-radius: 10px;
+                }
+            }
+        }
+    }
+
+    .content {
+        flex: 1
+    }
 }
 </style>

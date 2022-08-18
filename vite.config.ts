@@ -46,6 +46,26 @@ export default defineConfig({
     host: pkg.env.VITE_DEV_SERVER_HOST,
     port: pkg.env.VITE_DEV_SERVER_PORT,
   },
+  resolve: {
+    alias: {
+      "@": path.resolve(__dirname, "src"),
+      views: path.resolve(__dirname, "src/views"),
+      config: path.resolve(__dirname, "src/config"),
+      store: path.resolve(__dirname, "src/store"),
+      apis: path.resolve(__dirname, "src/apis"),
+      router: path.resolve(__dirname, "src/router"),
+      utils: path.resolve(__dirname, "src/utils"),
+      assets: path.resolve(__dirname, "src/assets"),
+    },
+  },
+  css: {
+    preprocessorOptions: {
+      // 设置默认全局引入的less   less => scss
+      less: {
+        additionalData: '@import "assets/style/main.less";',
+      },
+    },
+  },
 })
 
 function withDebug(config: UserConfig): UserConfig {
