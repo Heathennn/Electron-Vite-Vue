@@ -12,7 +12,7 @@ export const menuList: MenuItem[] = [
         routeName: 'home'
     },
     {
-        name: '标信',
+        name: '本地服务管理',
         path: '/ebidsun',
         routeName: 'ebidsun'
     },
