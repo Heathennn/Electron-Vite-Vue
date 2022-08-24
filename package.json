@@ -1,5 +1,5 @@
 {
-  "name": "electron-vue-vite",
+  "name": "Gear",
   "version": "0.0.1",
   "main": "dist/electron/main/index.js",
   "description": "Gear",
@@ -36,5 +36,24 @@
     "vite",
     "vue3",
     "vue"
-  ]
+  ],
+  "build": {
+    "productName": "Gear",
+    "appId": "com.electron.Gear",
+    "extraFiles": [
+      {
+        "from": "./pyScript/",
+        "to": "./pyScript/"
+      }
+    ],
+    "files": [
+      "dist/**/*"
+    ],
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true
+    }
+  }
 }

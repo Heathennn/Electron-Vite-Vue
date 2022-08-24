@@ -21,13 +21,13 @@ import { ipcRenderer  } from 'electron';
     }
     const isRunning = ref<boolean>(false)
     const runPyJenkinsProject = () => {
-        ipcRenderer.send('runLocalProject', `cd E:\\project\\ebidsun-jenksin-server && python main.py`)
+        ipcRenderer.send('runLocalCmd', `cd E:\\project\\ebidsun-jenksin-server && python main.py`)
     }
 
     const runBuildCmd = async () => {
         isRunning.value = true;
         console.log('执行中。。。')
-        await ipcRenderer.invoke('runLocalProject', `E:\\project\\ebidsun-web-devtool`, `npm run build`)
+        await ipcRenderer.invoke('runLocalCmd', `E:\\project\\ebidsun-web-devtool`, `npm run build`)
         isRunning.value = false
         console.log("执行完毕。。。")
     }

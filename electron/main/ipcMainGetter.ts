@@ -23,7 +23,7 @@ ipcMain.handle("getPwd", async (event, arg) => {
 
 // path: 运行命令的pwd
 // cmd 需要运行的命令
-ipcMain.handle("runLocalProject", async (event, path, cmd) => {
+ipcMain.handle("runLocalCmd", async (event, path, cmd) => {
   console.log(`[render] => path: ${path}  === cmd: ${cmd}`);
   await new Promise((resolve, reject) => {
     const _cmd = spawn(cmd, [], {

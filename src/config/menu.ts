@@ -15,5 +15,11 @@ export const menuList: MenuItem[] = [
         name: '标信',
         path: '/ebidsun',
         routeName: 'ebidsun'
+    },
+    {
+        name: '解码器',
+        path: '/decoder',
+        routeName: 'decoder'
     }
 ]
+
